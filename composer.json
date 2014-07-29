@@ -3,8 +3,14 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
+	"require-dev": {
+		"heroku/heroku-buildpack-php": "dev-master"
+	},
 	"require": {
-		"laravel/framework": "4.2.*"
+		"laravel/framework": "4.2.*",
+		"cboden/Ratchet": "0.3.*",
+		"maatwebsite/excel": "dev-master",
+		"thujohn/pdf": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
