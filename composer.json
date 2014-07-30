@@ -11,7 +11,9 @@
 		"cboden/Ratchet": "0.3.*",
 		"maatwebsite/excel": "dev-master",
 		"thujohn/pdf": "dev-master",
-		"anlutro/curl": "dev-master"
+		"anlutro/curl": "dev-master",
+		"guzzlehttp/guzzle": "~4.0",
+		"mandrill/mandrill": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

@@ -15,7 +15,9 @@ return array(
 	|
 	*/
 
-	'driver' => 'smtp',
+	//'driver' => 'smtp',
+	'driver' => 'mandrill',
+	 
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +30,9 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	//host' => 'smtp.mailgun.org',
+	'host' => 'smtp.mandrillapp.com',
+	
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +58,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => null, 'name' => null),
+	'from' => array('no-reply@modularfusion.com' => null, 'name' => 'ModularFusion'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +84,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'jefferson.salunga@yahoo.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +97,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' => '83SEaPaCVNraRXKrQHFOyw',
 
 	/*
 	|--------------------------------------------------------------------------
