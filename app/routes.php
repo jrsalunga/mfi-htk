@@ -23,7 +23,7 @@ Route::get('/test-api', function(){
 	//$url = $curl->buildUrl('http://htk.mfi.com/api/test', []);
 	//$response = $curl->post($url, ['post' => 'data']);
 
-	$url = cURL::buildUrl('http://htk.mfi.com/api/test', []);
+	$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/api/test', []);
 	$response = cURL::post($url, ['post' => 'data']);
 
 	echo $response->code.'<br>';
