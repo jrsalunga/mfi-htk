@@ -122,7 +122,7 @@ Route::get('/test-mail', function(){
     );
     $async = false;
     $ip_pool = 'Main Pool';
-    $send_at = 'example send_at';
+    $send_at = '2014-07-30';
     $result = $mandrill->messages->send($message, $async, $ip_pool, $send_at);
     print_r($result);
 
