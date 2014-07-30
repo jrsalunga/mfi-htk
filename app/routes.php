@@ -20,7 +20,11 @@ Route::get('/', function()
 
 
 
-Route::get('/gethostname', function()
+
+
+
+
+Route::get('/env/hostname', function()
 {
-	dd(gethostname());
+	return gethostname();
 });

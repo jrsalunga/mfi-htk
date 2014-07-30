@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'pgsql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'mfi-htk',
-			'username'  => 'root',
-			'password'  => 'p@55w0rd',
+			'database'  => 'forge',
+			'username'  => 'forge',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -65,10 +65,10 @@ return array(
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'forge',
-			'username' => 'forge',
-			'password' => '',
+			'host'     => 'ec2-54-225-101-124.compute-1.amazonaws.com',
+			'database' => 'd6ncjd8fr64jsb',
+			'username' => 'plhmwfkdaujmyr',
+			'password' => 'ZL6IHXmbRhDkK06jPO1ObH0SOK',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',

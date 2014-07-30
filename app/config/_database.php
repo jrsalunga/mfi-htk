@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'mfi-htk',
-			'username'  => 'root',
-			'password'  => 'p@55w0rd',
+			'database'  => 'forge',
+			'username'  => 'forge',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

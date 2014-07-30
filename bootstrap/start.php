@@ -25,8 +25,8 @@ $app = new Illuminate\Foundation\Application;
 */
 
 $env = $app->detectEnvironment(array(
-	'local' => array('localhost'),
-	'production' => array('mfi-htk.herokuapp.com'),
+	'local' => array('jrsalunga'),
+	'production' => array('15abbdc5-a06b-4724-a506-845ee9c9586d'),
 ));
 
 /*
