@@ -33,6 +33,7 @@ Route::get('/test-api', function(){
 
 	$data = array('fsaf'=>'fsafsa');
 	Mail::send('emails.welcome', $data, function($message){
+		$message->from('no-replay@modularfusion.com', 'MFI' );
     	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
 	});
 
