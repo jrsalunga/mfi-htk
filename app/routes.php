@@ -66,7 +66,7 @@ Route::get('/test-mail', function(){
                 'content' => 'Salunga')
     ))));
 
-	$template_name = 'Stationary';
+	$template_name = 'welcome';
 
 	$template_content = array(
     array(
