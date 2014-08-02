@@ -31,11 +31,7 @@ Route::get('/test-api', function(){
 	echo json_encode($response->headers);
 
 
-	$data = array('fullname'=>'Jefferson Salunga');
-	Mail::send('emails.welcome', $data, function($message){
-		$message->from('no-replay@modularfusion.com', 'MFI' );
-    	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
-	});
+	
 
 });
 
@@ -46,7 +42,16 @@ Route::get('/test-ping', function(){
     print_r($result);
 });
 
+Route::get('/test-email', function(){
+	
+	
+	$data = array('fullname'=>'Jefferson Salunga');
+	Mail::send('emails.welcome', $data, function($message){
+		$message->from('no-replay@modularfusion.com', 'ModularFusion Inc' );
+    	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
+	});
 
+});
 
 Route::get('/test-mail', function(){
 	
