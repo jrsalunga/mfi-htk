@@ -46,10 +46,10 @@ Route::get('/test-email', function(){
 	
 	
 	$data = array('fullname'=>'Jefferson Salunga');
-	Mail::send('emails.welcome', $data, function($message){
+	dd(Mail::send('emails.welcome', $data, function($message){
 		$message->from('no-replay@modularfusion.com', 'ModularFusion Inc' );
     	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
-	});
+	}));
 
 });
 
