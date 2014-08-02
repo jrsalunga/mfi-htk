@@ -92,7 +92,7 @@ Route::get('/php-mail', function(){
     'Reply-To: no-preply@modularfusion.com' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
 
-	mail($to, $subject, $message, $headers);
+	echo mail($to, $subject, $message, $headers);
 
 });
 
