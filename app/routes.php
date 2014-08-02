@@ -49,6 +49,7 @@ Route::get('/test-ping', function(){
 Route::get('/test-mail', function(){
 
 	$mandrill = new Mandrill('83SEaPaCVNraRXKrQHFOyw');
+	$template_name = 'welcome2';
     $message = array(
     'subject' => 'Test message',
     'from_email' => 'no-reply@modularfusion.com',
@@ -66,7 +67,7 @@ Route::get('/test-mail', function(){
                 'content' => 'Salunga')
     ))));
 
-	$template_name = 'welcome';
+	
 
 	$template_content = array(
     array(
@@ -81,6 +82,13 @@ Route::get('/test-mail', function(){
 print_r($mandrill->messages->sendTemplate($template_name, $template_content, $message));
 
 });
+
+
+Route::get('/test-mail-template', function(){
+
+
+});
+
 
 
 Route::post('/api/test', function(){
