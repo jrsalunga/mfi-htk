@@ -31,7 +31,7 @@ Route::get('/test-api', function(){
 	echo json_encode($response->headers);
 
 
-	$data = array('fsaf'=>'fsafsa');
+	$data = array('fullname'=>'Jefferson Salunga');
 	Mail::send('emails.welcome', $data, function($message){
 		$message->from('no-replay@modularfusion.com', 'MFI' );
     	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
