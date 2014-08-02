@@ -16,7 +16,7 @@ return array(
 	*/
 
 	//'driver' => 'smtp',
-	'driver' => 'mandrill',
+	'driver' => 'smtp',
 	 
 
 	/*
@@ -110,7 +110,7 @@ return array(
 	|
 	*/
 
-	'sendmail' => '/usr/sbin/sendmail -bs',
+	//'sendmail' => '/usr/sbin/sendmail -bs',
 
 	/*
 	|--------------------------------------------------------------------------

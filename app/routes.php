@@ -131,7 +131,7 @@ Route::get('/test-mail', function(){
 Route::get('/test-mail-template', function(){
 
 	$mandrill = new Mandrill('83SEaPaCVNraRXKrQHFOyw');
-	$template_name = 'welcome2';
+	$template_name = 'welcome';
     $message = array(
     'subject' => 'Test message',
     'from_email' => 'no-reply@modularfusion.com',
