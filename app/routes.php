@@ -47,7 +47,7 @@ Route::get('/test-ping', function(){
 
 
 
-Route::get('/test-mail-template', function(){
+Route::get('/test-mail', function(){
 	
 	$mandrill = new Mandrill('83SEaPaCVNraRXKrQHFOyw');
     $message = array(
