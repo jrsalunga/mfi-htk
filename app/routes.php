@@ -84,8 +84,15 @@ print_r($mandrill->messages->sendTemplate($template_name, $template_content, $me
 });
 
 
-Route::get('/test-mail-template', function(){
+Route::get('/php-mail', function(){
+	$to      = 'freakyash_02@yahoo.com.com';
+	$subject = 'The Test Email';
+	$message = 'hello';
+	$headers = 'From: no-preply@modularfusion.com' . "\r\n" .
+    'Reply-To: no-preply@modularfusion.com' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion();
 
+	mail($to, $subject, $message, $headers);
 
 });
 
