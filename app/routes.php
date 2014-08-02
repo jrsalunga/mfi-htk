@@ -23,17 +23,17 @@ Route::get('/test-api', function(){
 	//$url = $curl->buildUrl('http://htk.mfi.com/api/test', []);
 	//$response = $curl->post($url, ['post' => 'data']);
 
-	$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/api/test', []);
-	$response = cURL::post($url, ['post' => 'data']);
+	$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/api/test', array());
+	$response = cURL::post($url, array('post' => 'data'));
 
 	echo $response->code.'<br>';
 	echo $response->body.'<br>';
 	echo json_encode($response->headers);
 
 
-	$data = ['fsaf'=>'fsafsa'];
+	$data = array('fsaf'=>'fsafsa');
 	Mail::send('emails.welcome', $data, function($message){
-    	$message->to('jefferson.salunga@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
+    	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
 	});
 
 });
