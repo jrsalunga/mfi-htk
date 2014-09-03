@@ -210,6 +210,6 @@ Route::get('/env/hostname', function()
 
 
 Route::get('/phpinfoko', function(){
-	
+	return phpinfo();
 });
 
