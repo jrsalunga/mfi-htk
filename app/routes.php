@@ -204,3 +204,12 @@ Route::get('/env/hostname', function()
 {
 	return gethostname();
 });
+
+
+
+
+
+Route::get('/phpinfoko', function(){
+	
+});
+
