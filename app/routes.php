@@ -213,3 +213,11 @@ Route::get('/phpinfoko', function(){
 	echo phpinfo();
 });
 
+
+
+
+Route::get('/checkdbconn', function(){
+	if(DB::connection()->getDatabaseName()){
+	   echo "conncted sucessfully to database ".DB::connection()->getDatabaseName();
+	}
+});
