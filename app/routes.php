@@ -200,6 +200,10 @@ Route::get('/env', function(){
 	echo $environment;
 });
 
+Route::get('/api/employee/{id}', function($id){
+	$employee = Employee::find($id);
+	return $employee->toJson();
+});
 
 Route::get('/env/hostname', function(){
 	return gethostname();
