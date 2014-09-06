@@ -196,12 +196,12 @@ Route::post('/api/test', function(){
 
 
 Route::get('/env', function(){
-	
+	$environment = App::environment();
+	echo $environment;
 });
 
 
-Route::get('/env/hostname', function()
-{
+Route::get('/env/hostname', function(){
 	return gethostname();
 });
 
@@ -218,6 +218,6 @@ Route::get('/phpinfoko', function(){
 
 Route::get('/checkdbconn', function(){
 	if(DB::connection()->getDatabaseName()){
-	   echo "conncted sucessfully to database ".DB::connection()->getDatabaseName();
+	   echo "connected sucessfully to database ".DB::connection()->getDatabaseName();
 	}
 });
