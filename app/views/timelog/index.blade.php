@@ -73,7 +73,7 @@ Employee Timelog
   					@foreach($timelogs as $timelog)
   					<tr>
 	  					<td>{{ $timelog->code }}</td>
-	  					<td>{{ $timelog->lastname }}, {{ $timelog->firstname }} {{ $timelog->middlename }}</td>
+	  					<td>{{ $timelog->lastname }}, {{ $timelog->firstname }} {{ $timelog->firstname }}</td>
 	  					<td>{{ $timelog->date }}</td>
 	  					<td>{{ $timelog->time }}</td>
 	  					<td>

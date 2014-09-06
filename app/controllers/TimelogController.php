@@ -15,8 +15,15 @@ class TimelogController extends BaseController {
 	
 	public function index() {
 		
-		$vtimelog = vTimelog::paginate(10);
-		//$vtimelog = Employee::orderBy('lastname', 'ASC')->paginate(10);
+		//$vtimelog = vTimelog::paginate(10);
+		$sql = "";
+		
+		//$vtimelog = DB::select($sql);
+		
+		$vtimelog = DB::table('timelog')
+            ->join('employee', 'employee.id', '=', 'timelog.employeeid')
+            ->select('employee.code', 'employee.lastname', 'employee.firstname', 'timelog.datetime as date', 'timelog.datetime as time', 'timelog.txncode as type', 'timelog.employeeid', 'timelog.datetime', 'timelog.txncode', 'timelog.entrytype', 'timelog.terminalid', 'timelog.id')
+            ->paginate(10);
 		
 		return View::make('timelog.index')->with('timelogs', $vtimelog);
 		
