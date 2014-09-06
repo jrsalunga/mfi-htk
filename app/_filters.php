@@ -33,19 +33,19 @@ App::after(function($request, $response)
 |
 */
 
-
-
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::route('admin.login');//Redirect::guest('login');
-});
-
-
-Route::filter('auth-admin', function(){
-	if (Auth::guest()) 
-		return Redirect::guest('login');
-	if (Auth::user()->admin != TRUE)
-		return Redirect::to('restricted');
+	if (Auth::guest())
+	{
+		if (Request::ajax())
+		{
+			return Response::make('Unauthorized', 401);
+		}
+		else
+		{
+			return Redirect::guest('login');
+		}
+	}
 });
 
 
@@ -67,10 +67,8 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::route('admin.login');// Redirect::to('/');
+	if (Auth::check()) return Redirect::to('/');
 });
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -87,8 +85,6 @@ Route::filter('csrf', function()
 {
 	if (Session::token() != Input::get('_token'))
 	{
-		//throw new Illuminate\Session\TokenMismatchException;
-		Session::flash('error', 'Error on validating csrf form!');
-		return Redirect::to(URL::previous());
+		throw new Illuminate\Session\TokenMismatchException;
 	}
 });

@@ -1,227 +1,481 @@
 <?php
 
+
+
+Route::get('/', function() {
+	
+	$sql = "SELECT employee.code, employee.lastname, employee.firstname, DATE(timelog.datetime) as date, ";
+	$sql .= "TIME(timelog.datetime) as time, timelog.txncode as type, employee.rfid ";
+	$sql .= "FROM employee , timelog ";
+	$sql .= "WHERE employee.id = timelog.employeeid ";
+	$sql .= "ORDER BY DATE(timelog.datetime) DESC, TIME(timelog.datetime) DESC ";
+	$sql .= "LIMIT 20";
+	
+	$employees = DB::select($sql);
+	
+	return View::make('home.index')->with('employees', $employees);
+});
+
+
+
+//Route::get('admin/masterfiles', 'MasterfilesController@index');
+//Route::resource('admin', 'AdminController');
+//Route::resource('admin/masterfiles', 'MasterfilesController');
+//Route::resource('admin/reports', 'ReportsController');
+
+Route::get('admin', array('before' => 'auth', 'as'=>'admin.index', 'uses'=>'AdminController@index'));
+
+Route::get('admin/masterfiles', array('before' => 'auth', 'as'=>'admin.masterfiles.index', 'uses'=>'MasterfilesController@index'));
+Route::get('admin/masterfiles/employee', array('before' => 'auth', 'as'=>'employee.index', 'uses'=>'EmployeeController@index'));
+Route::post('admin/masterfiles/employee', array('before' => 'auth', 'as'=>'employee.create', 'uses'=>'EmployeeController@create', 'before' => 'csrf'));
+Route::put('admin/masterfiles/employee', array('before' => 'auth', 'as'=>'employee.update', 'uses'=>'EmployeeController@update', 'before' => 'csrf'));
+Route::delete('admin/masterfiles/employee', array('before' => 'auth', 'as'=>'employee.delete', 'uses'=>'EmployeeController@delete', 'before' => 'csrf'));
+//Route::get('admin/masterfiles/employee/add', array('as'=>'employee.create', 'uses'=>'EmployeeController@create'));
+Route::get('admin/masterfiles/department', array('before' => 'auth', 'as'=>'department.index', 'uses'=>'DepartmentController@index'));
+
+
+
+Route::get('admin/transactions', array('before' => 'auth', 'as'=>'admin.transactions.index', 'uses'=>'TransactionsController@index'));
+Route::get('admin/transactions/timelog', array('before' => 'auth', 'as'=>'timelog.index', 'uses'=>'TimelogController@index'));
+Route::post('admin/transactions/timelog', array('before' => 'auth', 'as'=>'timelog.create', 'uses'=>'TimelogController@create', 'before' => 'csrf'));
+Route::put('admin/transactions/timelog', array('before' => 'auth', 'as'=>'timelog.update', 'uses'=>'TimelogController@update', 'before' => 'csrf'));
+Route::delete('admin/transactions/timelog', array('before' => 'auth', 'as'=>'timelog.remove', 'uses'=>'TimelogController@remove', 'before' => 'csrf'));
+
+
+
+Route::get('admin/reports', array('before' => 'auth', 'as'=>'admin.reports.index', 'uses'=>'ReportsController@index'));
+Route::get('admin/reports/emp-timelog', array('before' => 'auth', 'as'=>'emp-timelog.emp-timelog', 'uses'=>'ReportsController@empTimelog'));
+Route::get('admin/reports/batch-timelog', array('before' => 'auth', 'as'=>'batch-timelog.batch-timelog', 'uses'=>'ReportsController@empTimelogAll'));
+
+
+
+Route::get('admin/reguser', array('as'=>'admin.reguser', 'uses'=>'AdminController@regUser'));
+Route::get('admin/login', array('as'=>'admin.login', 'uses'=>'AdminController@login'));
+
+Route::post('admin/login', array('as'=>'admin.login.post', 'uses'=>'AdminController@postLogin'));
 /*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
+Route::post('admin/login', function(){
+	$user = array(
+		'email' => Input::get('email'),
+		'password' => Input::get('password')
+	);
+	
+	if (Auth::attempt($user)){
+		return Redirect::to('profile');
+	}
+	return Redirect::to('admin/login')->with('login_error','Could not log in.');
+});
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('admin/logout', array('as'=>'admin.logout', 'uses'=>'AdminController@logout'));
+Route::get('admin/settings', array('as'=>'admin.settings', 'uses'=>'AdminController@settings'));
+
+Route::post('api/timelog', array('as'=>'timelog.post', 'uses'=>'TimelogController@post'));
+Route::get('api/employee/{field?}/{value?}', array('as'=>'field.get', 'uses'=>'EmployeeController@getByField'));
+Route::get('api/search/{field?}', array('as'=>'search.field', 'uses'=>'SearchController@searchTable'));
 
 
 
-Route::get('/test-api', function(){
-	//$curl = new anlutro\cURL\cURL;
-	//$url = $curl->buildUrl('http://htk.mfi.com/api/test', []);
-	//$response = $curl->post($url, ['post' => 'data']);
-
-	$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/api/test', array());
-	$response = cURL::post($url, array('post' => 'data'));
-
-	echo $response->code.'<br>';
-	echo $response->body.'<br>';
-	echo json_encode($response->headers);
 
 
+Route::get('api/timelog/employee/{id?}', function($id = null) {
 	
-
-});
-
-
-Route::get('/test-ping', function(){
-	$mandrill = new Mandrill('83SEaPaCVNraRXKrQHFOyw');
-	$result = $mandrill->users->ping();
-    print_r($result);
-});
-
-Route::get('/test-email', function(){
+	if(!$id){
+		return 'please select employee';
+	}
+	
+	$to = Request::query('to');
+	$fr = Request::query('fr');
 	
 	
-	$data = array('fullname'=>'Jefferson Salunga');
-	dd(Mail::send('emails.welcome', $data, function($message){
-		$message->from('no-replay@modularfusion.com', 'ModularFusion Inc' );
-    	$message->to('freakyash_02@yahoo.com', 'Jefferson Salunga')->subject('Welcome!');
-	}));
+	if(!empty($to) && !empty($fr)){
+		
+		if(strtotime($to) >= strtotime($fr)){
+ 			//return 'correct range';
+		} else {
+			return 'invalid range';
+		}	
+	} else {
+		$query_date = 'now';
+		// First day of the month.
+		//$fr = date('Y-m-01', strtotime($query_date));
+		// Last day of the month.
+		//$to = date('Y-m-t', strtotime('now'));
+		
+		$fr = date('Y-m-d', strtotime('-14 day'));
+		$to = date('Y-m-d', strtotime('now'));
 
-});
-
-Route::get('/test-mail', function(){
+	}
 	
-	$mandrill = new Mandrill('83SEaPaCVNraRXKrQHFOyw');
-    $message = array(
-        'html' => '<p>Example HTML content</p>',
-        'text' => 'Example text content',
-        'subject' => 'example subject',
-        'from_email' => 'no-reply@modularfusion.com',
-        'from_name' => 'MFI',
-        'to' => array(
-            array(
-                'email' => 'freakyash_02@yahoo.com',
-                'name' => 'Salunga, Jefferson',
-                'type' => 'to'
-            )
-        ),
-        'headers' => array('Reply-To' => 'no-reply@modularfusion.com'),
-        'important' => false,
-        'track_opens' => null,
-        'track_clicks' => null,
-        'auto_text' => null,
-        'auto_html' => null,
-        'inline_css' => null,
-        'url_strip_qs' => null,
-        'preserve_recipients' => null,
-        'view_content_link' => null,
-        'bcc_address' => null,
-        'tracking_domain' => null,
-        'signing_domain' => null,
-        'return_path_domain' => null,
-        'merge' => true,
-        'global_merge_vars' => array(
-            array(
-                'name' => 'merge1',
-                'content' => 'merge1 content'
-            )
-        ),
-        'merge_vars' => array(
-            array(
-                'rcpt' => 'freakyash_02@yahoo.com',
-                'vars' => array(
-                    array(
-                        'name' => 'merge2',
-                        'content' => 'merge2 content'
-                    )
-                )
-            )
-        ),
-        'tags' => array('password-resets'),
-        'subaccount' => 'customer-123',
-        'google_analytics_domains' => array('modularfusion.com'),
-        'google_analytics_campaign' => 'no-reply@modularfusion.com',
-        'metadata' => array('website' => 'www.modularfusion.com'),
-        'recipient_metadata' => array(
-            array(
-                'rcpt' => 'freakyash_02@yahoo.com',
-                'values' => array('user_id' => 123456)
-            )
-        ),
-        'attachments' => array(
-            array(
-                'type' => 'text/plain',
-                'name' => 'myfile.txt',
-                'content' => 'ZXhhbXBsZSBmaWxl'
-            )
-        ),
-        'images' => array(
-            array(
-                'type' => 'image/png',
-                'name' => 'IMAGECID',
-                'content' => 'ZXhhbXBsZSBmaWxl'
-            )
-        )
-    );
-    $async = false;
-    $ip_pool = 'Main Pool';
-    $send_at = '2014-08-02';
-    $result = $mandrill->messages->send($message, $async, $ip_pool, $send_at);
-    print_r($result);
-});
-
-Route::get('/test-mail-template', function(){
-
-	$mandrill = new Mandrill('83SEaPaCVNraRXKrQHFOyw');
-	$template_name = 'welcome';
-    $message = array(
-    'subject' => 'Test message',
-    'from_email' => 'no-reply@modularfusion.com',
-    'html' => '<p>this is a test message with Mandrill\'s PHP wrapper!.</p>',
-    'to' => array(array('email' => 'freakyash_02@yahoo.com', 'name' => 'Jefferson Salunga')),
-    'merge_vars' => array(array(
-        'rcpt' => 'freakyash_02@yahoo.com',
-        'vars' =>
-        array(
-            array(
-                'name' => 'FIRSTNAME',
-                'content' => 'Jefferson'),
-            array(
-                'name' => 'LASTNAME',
-                'content' => 'Salunga')
-    ))));
-
 	
 
-	$template_content = array(
-    array(
-        'name' => 'main',
-        'content' => 'Hi *|FIRSTNAME|* *|LASTNAME|*, thanks for signing up.'),
-    array(
-        'name' => 'footer',
-        'content' => 'Copyright 2012.')
-
-);
-
-print_r($mandrill->messages->sendTemplate($template_name, $template_content, $message));
-
-});
-
-
-Route::get('/php-mail', function(){
-	$to      = 'freakyash_02@yahoo.com.com';
-	$subject = 'The Test Email';
-	$message = 'hello';
-	$headers = 'From: no-preply@modularfusion.com' . "\r\n" .
-    'Reply-To: no-preply@modularfusion.com' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
-
-	echo 'sending mail';
-	echo mail($to, $subject, $message, $headers);
-
-});
-
-
-
-Route::post('/api/test', function(){
-	//echo 'ok';
-	//echo Input::get('s');
-	//echo Input::get('post');
-	echo json_encode($_POST);
-});
-
-
-Route::get('/env', function(){
-	$environment = App::environment();
-	echo $environment;
-});
-
-Route::get('/api/employee/{id}', function($id){
-	$employee = Employee::find($id);
-	return $employee->toJson();
-});
-
-Route::get('/env/hostname', function(){
-	return gethostname();
-});
-
-
-
-
-
-Route::get('/phpinfoko', function(){
-	echo phpinfo();
-});
-
-
-
-
-Route::get('/checkdbconn', function(){
-	if(DB::connection()->getDatabaseName()){
-	   echo "connected sucessfully to database ".DB::connection()->getDatabaseName();
+	if ($tl = Timelog::getEmpTimelogRange($id, $fr, $to)){
+		return $tl;
 	}
 });
+
+
+
+
+
+
+
+
+Route::get('register', function(){
+	
+	
+	if(!empty($_GET['u']) && !empty($_GET['p'])){
+		
+		$user = new User();
+		
+		$user->name = Input::get('n');
+		$user->username = Input::get('u');
+		$user->password = Hash::make(Input::get('p'));
+		$user->email = Input::get('e');
+		$user->admin = '0';
+		$user->id = Employee::get_uid();
+		
+		if($user->save()){
+			return 'success';
+		} else {
+			return 'error';
+		}
+	} else {
+		return 'no username & password';
+	}
+	
+	
+	
+});
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('emp', function(){
+	$e = Employee::where('rfid', '=','0002357039')->get();
+	$f = Employee::find('8C774A47A5C111E385D3C0188508F93C');
+	return isset($e[0]) ? 'success':'error';
+	
+});
+
+
+Route::get('select', function(){
+	
+	$sql  = "SELECT e.code, e.lastname, e.firstname, date(t.datetime) as date, time(t.datetime) as time, t.txncode as type ";
+	$sql .= "FROM employee as a, timelog as b ";
+	$sql .= "WHERE e.id = t.employeeid ";
+	$sql .= "ORDER BY DATE(t.datetime) DESC, TIME(t.datetime) DESC ";
+	$sql .= "LIMIT 20";
+	
+	$sql2 = "SELECT employee.code, employee.lastname, employee.firstname, DATE(timelog.datetime) as date, ";
+	$sql2 .= "TIME(timelog.datetime) as time, timelog.txncode as type ";
+	$sql2 .= "FROM employee , timelog ";
+	$sql2 .= "WHERE employee.id = timelog.employeeid ";
+	$sql2 .= "ORDER BY DATE(timelog.datetime) DESC, TIME(timelog.datetime) DESC ";
+	$sql2 .= "LIMIT 20";
+	
+	$result = DB::select($sql2);
+	return json_encode($result);
+	
+});
+
+
+Route::get('timelogs', function(){
+	//$timelogs = Timelog::paginate(5);	
+	$timelogs = DB::table('timelog')->paginate(5);
+	
+	return $timelogs;
+});
+
+Route::get('employees', function(){
+	//$timelogs = Timelog::paginate(5);	
+	$employees = Employee::orderBy('lastname', 'ASC')->paginate(5);
+	
+	return $employees;
+});
+
+
+Route::get('emp-timelog', function(){
+
+	//$timelogs = Employee::find('513FE18CA5C211E385D3C0188508F93C')->timelogs;
+	
+	$timelogs = Timelog::with('employee')->where('employeeid', '=', '513FE18CA5C211E385D3C0188508F93C')->get();
+	
+	
+	
+	//dd(Timelog::with('employee')->first()->toArray());
+	
+	//$timelogs = Employee::find('513FE18CA5C211E385D3C0188508F93C');
+	//return DB::getQueryLog();
+	return $timelogs;
+});
+
+
+
+
+Route::get('vtimelog', function(){
+	//$timelogs = Timelog::paginate(5);	
+	$vtimelog = vTimelog::paginate(10);
+	//$vtimelog = Employee::orderBy('lastname', 'ASC')->paginate(10);
+	
+	return $vtimelog;
+});
+
+
+Route::get('getbypage', function(){
+	//$timelogs = Timelog::paginate(5);	
+	$employee = new Employee;
+	$data = $employee->getByPage(1, 5);
+	
+	//$vtimelog = Employee::orderBy('lastname', 'ASC')->paginate(10);
+	
+	return $data;
+});
+
+
+
+Route::get('emp-tito', function(){
+	
+	$timelogs = Timelog::with('employee')
+					->where('employeeid', '=', '513FE18CA5C211E385D3C0188508F93C')
+					->where('datetime', 'like', '2014-03-10%', 'AND')
+					->where('txncode', '=', 'ti', 'AND')
+					->orderBy('datetime', 'DESC')->get(); // ->first()
+	return $timelogs;
+});
+
+
+Route::get('emp-tito2', function(){
+	
+	$timelogs = Timelog::employeeid('513FE18CA5C211E385D3C0188508F93C')
+					->date('2014-03-10')
+					->txncode('ti')
+					->orderBy('datetime', 'DESC')->get(); // ->first()
+	return $timelogs;
+});
+
+
+Route::get('getin', function(){
+	
+	$in = Timelog::getEmpIn('513FE18CA5C211E385D3C0188508F93C','2014-03-10');
+	return $in;
+});
+
+Route::get('getins', function(){
+	
+	$in = Timelog::getEmpIns('513FE18CA5C211E385D3C0188508F93C','2014-04-01');
+	return $in;
+});
+
+Route::get('getinout', function(){
+	
+	$in = Timelog::getEmpInOut('513FE18CA5C211E385D3C0188508F93C','2014-03-10');
+	echo $in->ti.'<br>';
+	echo $in->to;
+});
+
+ 
+Route::get('dt', function(){
+	
+	$fr = new DateTime(date('Y-m-d', strtotime('-14 day')));
+	$to = new DateTime(date('Y-m-d', strtotime('now')));
+	$to = $to->modify('+1 day');
+	
+	$interval = new DateInterval('P1D');
+	$daterange = new DatePeriod($fr, $interval ,$to);
+	
+	foreach($daterange as $date){
+		$d = $date->format("Y-m-d");
+		echo $d.'<br>';
+	}
+	
+	
+});
+
+
+Route::get('daterange/{id?}', function($id = null) {
+	
+	if(!$id){
+		return 'please select employee';
+	}
+	
+	$to = Request::query('to');
+	$fr = Request::query('fr');
+	
+	
+	if(!empty($to) && !empty($fr)){
+		
+		if(strtotime($to) >= strtotime($fr)){
+ 			//return 'correct range';
+		} else {
+			return 'invalid range';
+		}	
+	} else {
+		$query_date = 'now';
+		// First day of the month.
+		//$fr = date('Y-m-01', strtotime($query_date));
+		// Last day of the month.
+		//$to = date('Y-m-t', strtotime($query_date));
+		
+		$fr = new DateTime(date('Y-m-d', strtotime('now')));
+		$to = $fr->modify('-15 days'); 
+		
+	}
+	
+	
+
+	if ($tl = Timelog::getEmpTimelogRange($id, $fr, $to)){
+		return $tl;
+	}
+});
+
+
+
+Route::get('changeformat', function(){
+
+	$tls = Timelog::where('txncode','=','to')->get();
+
+	foreach($tls as $tl){
+		$x = substr($tl->datetime,11,2);
+		echo $x.'<br>';
+		
+		switch($x){
+			case 1:
+				$r = 13;
+				break;
+			case 2:
+				$r = 14;
+				break;
+			case 3:
+				$r = 15;
+				break;
+			case 4:
+				$r = 16;
+				break;
+			case 5:
+				$r = 17;
+				break;
+			case 6:
+				$r = 18;
+				break;
+			case 7:
+				$r = 19;
+				break;
+			case 8:
+				$r = 20;
+				break;
+			case 9:
+				$r = 21;
+				break;
+			case 10:
+				$r = 22;
+				break;
+			/*
+			case 11:
+				$r = 23;
+				break;
+			case 12:
+				$r = 24;
+				break;	
+			*/
+			default:
+				$r = $x;
+		}
+		
+		$s = substr_replace($tl->datetime,$r, 11,2);
+		echo $s.'<br>';
+		
+		/*
+		$t = Timelog::find($tl->id);
+		//echo $t.'<br>';
+		$t->datetime = $s;
+		
+		if($t->save()){
+			echo 'saved!<br>';
+		} else {
+			echo 'error!<br>';
+		}
+		*/
+	
+	}
+	
+	//return $tl->datetime;
+});
+
+
+Route::get('/pdf', function()
+{
+    $html = '<html><body>'
+            . '<p>Put your html here, or generate it with your favourite '
+            . 'templating system.</p>'
+            . '</body></html>';
+			$var = 'jeff';
+    return PDF::load(View::make('emails.welcome')->with('var', $var) , 'A4', 'landscape')->show();
+});
+
+
+Route::get('/controller', function() {
+ 	
+	return Route::currentRouteAction();
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Event::listen('illuminate.query', function($query, $bindings, $time, $name){
+	//var_dump($query);
+	//var_dump($bindings);
+	//var_dump($time);
+	//var_dump($name);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
