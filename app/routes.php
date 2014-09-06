@@ -139,7 +139,7 @@ Route::get('register', function(){
 		$user->password = Hash::make(Input::get('p'));
 		$user->email = Input::get('e');
 		$user->admin = '0';
-		$user->id = Employee::get_uid();
+		$user->id = Employee::uuid();
 		
 		if($user->save()){
 			return 'success';
