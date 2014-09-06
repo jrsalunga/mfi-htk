@@ -20,11 +20,16 @@ class Timelog extends Eloquent {
 		return Validator::make($input, $this->rules);
 	}
 	
-	
+	/*
 	public static function get_uid(){
 		$id = DB::select('SELECT UUID() as id');
 		$id = array_shift($id);
 		return strtoupper(str_replace("-", "", $id->id));
+	}
+	*/
+	
+	public static function get_uid(){
+		return md5(uniqid());
 	}
 	
 	public function employee() {
