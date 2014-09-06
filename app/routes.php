@@ -4,16 +4,22 @@
 
 Route::get('/', function() {
 	
-	$sql = "SELECT employee.code, employee.lastname, employee.firstname, DATE(timelog.datetime) as date, ";
-	$sql .= "TIME(timelog.datetime) as time, timelog.txncode as type, employee.rfid ";
+	$sql = "SELECT employee.code, employee.lastname, employee.firstname, timelog.datetime as date, ";
+	$sql .= "timelog.datetime as time, timelog.txncode as type, employee.rfid ";
 	$sql .= "FROM employee , timelog ";
 	$sql .= "WHERE employee.id = timelog.employeeid ";
-	$sql .= "ORDER BY DATE(timelog.datetime) DESC, TIME(timelog.datetime) DESC ";
+	$sql .= "ORDER BY timelog.datetime ";
 	$sql .= "LIMIT 20";
 	
 	$employees = DB::select($sql);
 	
+	
+	
 	return View::make('home.index')->with('employees', $employees);
+	//return Timelog::find('09F0EC25358D11E48027206A8A7C9B16')->employee();
+	//return Timelog::has('employee')->get();
+	//return Employee::find('10A782CFECEA11E28649235D6C08DF49')->timelogs()->get();
+	
 });
 
 
