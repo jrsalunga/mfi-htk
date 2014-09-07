@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'pgsql',
+	'default' => 'mysql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return array(
 	*/
 
 	'connections' => array(
-
+		/*
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'ec2-54-225-101-124.compute-1.amazonaws.com',
@@ -56,6 +56,18 @@ return array(
 			'prefix'   => '',
 			'schema'   => 'public',
 		),
+		*/
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'mfihtk.db.6837826.hostedresource.com',
+			'database'  => 'mfihtk',
+			'username'  => 'mfihtk',
+			'password'  => 'p@55w0rd',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
+	),
 
 	),
 
