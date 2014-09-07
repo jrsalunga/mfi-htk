@@ -62,7 +62,7 @@ return array(
 			'host'      => 'mfihtk.db.6837826.hostedresource.com',
 			'database'  => 'mfihtk',
 			'username'  => 'mfihtk',
-			'password'  => 'p@55w0rd',
+			'password'  => 'P@55w0rd',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
