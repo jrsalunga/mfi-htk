@@ -22,7 +22,8 @@ var modalSettings = new ModalSettings();
 
 var Timelog = Backbone.Model.extend({
 	initialize: function(){
-		this.on('change', this.setName, this);
+		//this.on('change', this.setName, this);
+		this.setName();
 	},
 	defaults:{
 		employee: '',
@@ -31,7 +32,8 @@ var Timelog = Backbone.Model.extend({
 		txncode: '',
 	},
 	setName: function(){
-		console.log(this.model.toJSON());
+		var t = this.get('time');
+		this.set('time', moment(this.get('date')+' '+t).format('hh:mm:ss A'));
 	}
 });
 var timelog = new Timelog();
