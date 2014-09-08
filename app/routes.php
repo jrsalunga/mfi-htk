@@ -1,8 +1,19 @@
 <?php
 
-
+// mysql database godaddy 
+// u: mfihtk
+// p: P@55w0rd
+// https://sg2nlsmysqladm1.secureserver.net/dgrid55/5
 
 Route::get('/', function() {
+	/*
+	$sql = "SELECT employee.code, employee.lastname, employee.firstname, DATE(timelog.datetime) as date, ";
+	$sql .= "TIME(timelog.datetime) as time, timelog.txncode as type, employee.rfid ";
+	$sql .= "FROM employee , timelog ";
+	$sql .= "WHERE employee.id = timelog.employeeid ";
+	$sql .= "ORDER BY DATE(timelog.datetime) DESC, TIME(timelog.datetime) DESC ";
+	$sql .= "LIMIT 20";
+	*/
 	
 	$sql = "SELECT employee.code, employee.lastname, employee.firstname, timelog.datetime as date, ";
 	$sql .= "timelog.datetime as time, timelog.txncode as type, employee.rfid ";
