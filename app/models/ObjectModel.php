@@ -11,7 +11,7 @@ class ObjectModel extends Eloquent {
 	}
 	
 	public static function uuid(){
-		return md5(uniqid());
+		return strtoupper(md5(uniqid()));
 	}
 	
 	

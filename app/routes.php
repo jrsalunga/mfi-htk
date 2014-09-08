@@ -19,7 +19,7 @@ Route::get('/', function() {
 	$sql .= "timelog.datetime as time, timelog.txncode as type, employee.rfid ";
 	$sql .= "FROM employee , timelog ";
 	$sql .= "WHERE employee.id = timelog.employeeid ";
-	$sql .= "ORDER BY timelog.datetime ";
+	$sql .= "ORDER BY DATE(timelog.datetime) DESC, TIME(timelog.datetime) DESC ";
 	$sql .= "LIMIT 20";
 	
 	$employees = DB::select($sql);
@@ -88,6 +88,7 @@ Route::get('admin/logout', array('as'=>'admin.logout', 'uses'=>'AdminController@
 Route::get('admin/settings', array('as'=>'admin.settings', 'uses'=>'AdminController@settings'));
 
 Route::post('api/timelog', array('as'=>'timelog.post', 'uses'=>'TimelogController@post'));
+Route::post('/htk/api/timelog', array('as'=>'htk.timelog.post', 'uses'=>'TimelogController@postValidated'));
 Route::get('api/employee/{field?}/{value?}', array('as'=>'field.get', 'uses'=>'EmployeeController@getByField'));
 Route::get('api/search/{field?}', array('as'=>'search.field', 'uses'=>'SearchController@searchTable'));
 
@@ -447,9 +448,41 @@ Route::get('/controller', function() {
 
 
 
+Route::get('/timelog-api', function(){
+    //$curl = new anlutro\cURL\cURL;
+    //$url = $curl->buildUrl('http://htk.mfi.com/api/test', []);
+    //$response = $curl->post($url, ['post' => 'data']);
+    $timelog = new Timelog;
+    $timelog->employeeid    = '10A782CFECEA11E28649235D6C08DF49';
+    $timelog->datetime      = '2014-09-08 11:16:06';
+    $timelog->txncode       = 'ti';
+    $timelog->entrytype     = '1';
+    $timelog->terminalid    = 'local';
+    $timelog->id            = Timelog::get_uid();
+
+
+    $url = cURL::buildUrl('http://htk.mfi.com/htk/api/timelog', array());
+    $response = cURL::post($url, $timelog->toArray());
+
+    echo $response->code.'<br>';
+    echo $response->body.'<br>';
+    echo json_encode($response->headers);
+});
 
 
 
+Route::get('/test-api', function(){
+    //$curl = new anlutro\cURL\cURL;
+    //$url = $curl->buildUrl('http://htk.mfi.com/api/test', []);
+    //$response = $curl->post($url, ['post' => 'data']);
+
+    $url = cURL::buildUrl('http://mfi-htk.herokuapp.com/api/test', array());
+    $response = cURL::post($url, array('post' => 'data'));
+
+    echo $response->code.'<br>';
+    echo $response->body.'<br>';
+    echo json_encode($response->headers);
+});
 
 Route::post('/api/test', function(){
     //echo 'ok';

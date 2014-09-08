@@ -155,7 +155,6 @@ class TimelogController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			
 			$respone = array(
 					'code'=>'400',
 					'status'=>'error',
@@ -166,7 +165,6 @@ class TimelogController extends BaseController {
 		} else {
 			$employee = Employee::where('rfid', '=', Input::get('rfid'))->get();
 			
-			
 			if(!isset($employee[0])){ // employee does not exist having the RFID submitted
 				$respone = array(
 						'code'=>'401',
@@ -176,45 +174,119 @@ class TimelogController extends BaseController {
 				);	
 			} else {
 			
+				$timelog = new Timelog;
+				$timelog->employeeid    = $employee[0]->id;
+				$timelog->datetime 		= Input::get('datetime');
+				$timelog->txncode 	 	= Input::get('txncode');
+				$timelog->entrytype  	= Input::get('entrytype');
+				$timelog->terminalid 	= Input::get('terminalid');
+				$timelog->id 	 	 	= Timelog::get_uid();
+				
+				if($timelog->save()){
+					$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/htk/api/timelog', array());
+					$response = cURL::post($url, $timelog->toArray());
+					
+					if(strpos($response->code, '200' !== false)){
+						$respone = array(
+							'code'=>'200',
+							'status'=>'success',
+							'message'=>'Record saved and replicated on cloud!',
+						);			
+					} else {
+						$respone = array(
+							'code'=>'201',
+							'status'=>'success',
+							'message'=>'Record saved but not replicated on cloud!',
+						);
+					}
+				
+					$datetime = explode(' ',$timelog->datetime);
+					$txncode = $timelog->txncode=='to' ? 'Time Out':'Time In';
+				
+					$data = array(
+						'empno'		=> $employee[0]->code,
+						'lastname'	=> $employee[0]->lastname,
+						'firstname'	=> $employee[0]->firstname,
+						'middlename'=> $employee[0]->middlename,
+						'position'	=> $employee[0]->position ,
+						'date'		=> $datetime[0] ,
+						'time'		=> $datetime[1] ,
+						'txncode'	=> $txncode		
+					);
+
+					/*
+					$respone = array(
+							'code'=>'200',
+							'status'=>'success',
+							'message'=>'Record saved!',
+							'data'=> $data
+					);
+					*/	
+
+					array_push($respone, array('data'=>$data));
+
+				} else {
+					$respone = array(
+						'code'=>'400',
+						'status'=>'error',
+						'message'=>'Error on saving locally!',
+					);	
+				}				
+			}	
+		}
+
+
+		return json_encode($respone);
+	}
+	
+	
+	public function postValidated() {
+		
+		$rules = array(
+			'employeeid'	=> 'required',
+			'datetime'      => 'required',
+			'txncode'      	=> 'required',
+			'entrytype'     => 'required',
+			'terminalid'    => 'required',
+			'id'    => 'required',
+		);
+		
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$respone = array(
+					'code'=>'400',
+					'status'=>'error',
+					'message'=>'Error on validation',
+					'data'=> $validator
+			);
+			return json_encode('failed');
+		} else {
 			$timelog = new Timelog;
-			//$timelog->employeeid	= Input::get('employeeid');
-			$timelog->employeeid    = $employee[0]->id;
+			$timelog->employeeid	= Input::get('employeeid');
 			$timelog->datetime 		= Input::get('datetime');
 			$timelog->txncode 	 	= Input::get('txncode');
 			$timelog->entrytype  	= Input::get('entrytype');
 			$timelog->terminalid 	= Input::get('terminalid');
-			$timelog->id 	 	 	= Timelog::get_uid();
+			$timelog->id 	 	 	= Input::get('id');
 			
-			$timelog->save();
-		
-			Session::flash('message', 'Successfully created nerd!');
-			//return json_encode($employee[0]);
-			
-				$datetime = explode(' ',$timelog->datetime);
-				$txncode = $timelog->txncode=='to' ? 'Time Out':'Time In';
-			
-				$data = array(
-					'empno'		=> $employee[0]->code,
-					'lastname'	=> $employee[0]->lastname,
-					'firstname'	=> $employee[0]->firstname,
-					'middlename'=> $employee[0]->middlename,
-					'position'	=> $employee[0]->position ,
-					'date'		=> $datetime[0] ,
-					'time'		=> $datetime[1] ,
-					'txncode'	=> $txncode
-					
-				);
-			
+			if($timelog->save()){
 				$respone = array(
 						'code'=>'200',
 						'status'=>'success',
-						'message'=>'Record saved!',
-						'data'=> $data
-				);				
+						'message'=>'Record saved on cloud!',
+				);	
+			} else {
+				$respone = array(
+						'code'=>'400',
+						'status'=>'error',
+						'message'=>'Error on saving on cloud!',
+				);	
 			}
 			
 			return json_encode($respone);
 		}
+	
 	}
 
 

@@ -202,7 +202,7 @@ var ModalView = Backbone.View.extend({
 		var that = this;
 
 		var req = this.$('.table-model input[required]', '.table-model');
-
+		console.log(this);
 		if(req){
 			req.each(function(){
 				if($(this).val()==''){
