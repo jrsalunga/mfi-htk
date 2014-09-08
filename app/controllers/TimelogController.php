@@ -22,7 +22,7 @@ class TimelogController extends BaseController {
 		
 		$vtimelog = DB::table('timelog')
             ->join('employee', 'employee.id', '=', 'timelog.employeeid')
-            ->select('employee.code', 'employee.lastname', 'employee.firstname', 'DATE(timelog.datetime) as date', 'TIME(timelog.datetime) as time', 'timelog.txncode as type', 'timelog.employeeid', 'timelog.datetime', 'timelog.txncode', 'timelog.entrytype', 'timelog.terminalid', 'timelog.id')
+            ->select('employee.code', 'employee.lastname', 'employee.firstname', DB::raw('DATE(timelog.datetime) as date'), DB::raw('TIME(timelog.datetime) as time'), 'timelog.txncode as type', 'timelog.employeeid', 'timelog.datetime', 'timelog.txncode', 'timelog.entrytype', 'timelog.terminalid', 'timelog.id')
             ->paginate(10);
 		
 		return View::make('timelog.index')->with('timelogs', $vtimelog);
