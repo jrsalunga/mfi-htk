@@ -24,9 +24,11 @@ Route::get('/', function() {
 	
 	$employees = DB::select($sql);
 	
-	$first = DB::select($sql)[0];
+	//$first = DB::select($sql)[0];
+    $first = $employees[0];
 	
-	return View::make('home.index', compact('first'))->with('employees', $employees);
+    return View::make('home.index', compact('first', 'employees'));
+	//return View::make('home.index', compact('first'))->with('employees', $employees);
 	//return Timelog::find('09F0EC25358D11E48027206A8A7C9B16')->employee();
 	//return Timelog::has('employee')->get();
 	//return Employee::find('10A782CFECEA11E28649235D6C08DF49')->timelogs()->get();
