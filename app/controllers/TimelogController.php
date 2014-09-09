@@ -183,23 +183,25 @@ class TimelogController extends BaseController {
 				$timelog->id 	 	 	= Timelog::get_uid();
 				
 				if($timelog->save()){
-					$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/htk/api/timelog', array());
-					$response = cURL::post($url, $timelog->toArray());
-					
-					if(strpos($response->code, '200') !== false){
-						$respone = array(
-							'code'=>'200',
-							'status'=>'success',
-							'message'=>'Record saved and replicated on cloud!',
-						);			
-						$timelog->replicated = 1;
-						$timelog->save();
-					} else {
-						$respone = array(
-							'code'=>'201',
-							'status'=>'success',
-							'message'=>'Record saved but not replicated on cloud!',
-						);
+					if(App::environment() !== 'production'){
+						$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/htk/api/timelog', array());
+						$response = cURL::post($url, $timelog->toArray());
+						
+						if(strpos($response->code, '200') !== false){
+							$respone = array(
+								'code'=>'200',
+								'status'=>'success',
+								'message'=>'Record saved and replicated on cloud!',
+							);			
+							$timelog->replicated = 1;
+							$timelog->save();
+						} else {
+							$respone = array(
+								'code'=>'201',
+								'status'=>'success',
+								'message'=>'Record saved but not replicated on cloud!',
+							);
+						}
 					}
 				
 					$datetime = explode(' ',$timelog->datetime);

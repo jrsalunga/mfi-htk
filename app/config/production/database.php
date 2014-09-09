@@ -57,7 +57,16 @@ return array(
 			'schema'   => 'public',
 		),
 		*/
-		
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'mfihtk.db.6837826.hostedresource.com',
+			'database'  => 'mfihtk',
+			'username'  => 'mfihtk',
+			'password'  => 'P@55w0rd',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
 
 
 	),
