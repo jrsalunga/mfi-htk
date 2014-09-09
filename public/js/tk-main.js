@@ -113,7 +113,7 @@ var htmlEmployeeTimelogs = function(data){
 var appendToTkList = function(data){
 	
 	var d = moment(data.data.date+' '+data.data.time).tz("Asia/Manila").format('hh:mm:ss A');
-	var c = moment(data.data.date+' '+data.data.time).tz("Asia/Manila").format('MMM D');
+	var c = moment(data.data.date+' '+data.data.time).tz("Asia/Manila").format('MMM DD');
 	
 		var html = '<tr><td>'+ data.data.empno +'</td>';
 			html += '<td>'+ data.data.lastname +', '+ data.data.firstname +'</td>'
@@ -142,6 +142,7 @@ var updateEmpView = function(data){
 
 var updateEmpViewModal = function(data){
 	$('#mdl-emp-img').attr('src', 'images/employees/'+ data.data.code +'.jpg');
+	console.log($('#mdl-emp-img').attr('src'));
 	$('#mdl-emp-code').text(data.data.code);
 	$('#mdl-emp-name').text(data.data.lastname +', '+ data.data.firstname);
 	$('#mdl-emp-pos').text(data.data.position);
@@ -156,7 +157,7 @@ var updateTK = function(data){
 	var html = '<div class="alert alert-'+ data.status +'">'+ data.message +'</div>';	
 	$('.message-group').html(html);
 	
-	if(data && data.code=='200'){
+	if(data && (data.code=='200' || data.code=='201')){
 		appendToTkList(data);	
 		updateEmpView(data);
 		

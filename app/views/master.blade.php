@@ -57,12 +57,12 @@
 			</div>
 			<div class="emp-group">
 				<div class="img-cont">
-					<img  id="emp-img" src="images/blank.jpg" height="140px" width="140px" >
+					<img  id="emp-img" src="images/{{ $first->code }}.jpg" height="140px" width="140px" >
 				</div>
 				<div class="emp-cont">
-					<p id="emp-code"></p>
-					<h1 id="emp-name"></h1>
-					<p id="emp-pos"></p>
+					<p id="emp-code">{{ $first->code }}</p>
+					<h1 id="emp-name">{{ $first->lastname }}, {{ $first->firstname }}</h1>
+					<p id="emp-pos">{{ $first->position }}</p>
 				</div>
 				<div style="clear: both;"></div>
 			</div>

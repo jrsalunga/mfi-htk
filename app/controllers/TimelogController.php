@@ -186,12 +186,14 @@ class TimelogController extends BaseController {
 					$url = cURL::buildUrl('http://mfi-htk.herokuapp.com/htk/api/timelog', array());
 					$response = cURL::post($url, $timelog->toArray());
 					
-					if(strpos($response->code, '200' !== false)){
+					if(strpos($response->code, '200') !== false){
 						$respone = array(
 							'code'=>'200',
 							'status'=>'success',
 							'message'=>'Record saved and replicated on cloud!',
 						);			
+						$timelog->replicated = 1;
+						$timelog->save();
 					} else {
 						$respone = array(
 							'code'=>'201',
@@ -223,7 +225,7 @@ class TimelogController extends BaseController {
 					);
 					*/	
 
-					array_push($respone, array('data'=>$data));
+					$respone['data'] = $data;
 
 				} else {
 					$respone = array(

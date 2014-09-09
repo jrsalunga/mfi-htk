@@ -166,27 +166,23 @@ class EmployeeController extends BaseController {
 	
 	public function getByField($field, $value){
 		
-		
-		
 		$employee = Employee::where($field, '=', $value)->first();
 		
 		if($employee){
 			$respone = array(
-						'code'=>'200',
-						'status'=>'success',
-						'message'=>'Hello '. $employee->firstname. '=)',
-						'data'=> $employee->toArray()
-			);	
-			
+				'code'=>'200',
+				'status'=>'success',
+				'message'=>'Hello '. $employee->firstname. ' =)',
+				'data'=> $employee->toArray()
+			);				
 		} else {
 			$respone = array(
-						'code'=>'404',
-						'status'=>'danger',
-						'message'=>'Invalid RFID! Record no found.',
-						'data'=> ''
+				'code'=>'404',
+				'status'=>'danger',
+				'message'=>'Invalid RFID! Record no found.',
+				'data'=> ''
 			);	
-		}
-				
+		}				
 		return $respone;
 	} 
 

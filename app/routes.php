@@ -15,7 +15,7 @@ Route::get('/', function() {
 	$sql .= "LIMIT 20";
 	*/
 	
-	$sql = "SELECT employee.code, employee.lastname, employee.firstname, timelog.datetime as date, ";
+	$sql = "SELECT employee.code, employee.lastname, employee.firstname, employee.position, timelog.datetime as date, ";
 	$sql .= "timelog.datetime as time, timelog.txncode as type, employee.rfid ";
 	$sql .= "FROM employee , timelog ";
 	$sql .= "WHERE employee.id = timelog.employeeid ";
@@ -24,9 +24,9 @@ Route::get('/', function() {
 	
 	$employees = DB::select($sql);
 	
+	$first = DB::select($sql)[0];
 	
-	
-	return View::make('home.index')->with('employees', $employees);
+	return View::make('home.index', compact('first'))->with('employees', $employees);
 	//return Timelog::find('09F0EC25358D11E48027206A8A7C9B16')->employee();
 	//return Timelog::has('employee')->get();
 	//return Employee::find('10A782CFECEA11E28649235D6C08DF49')->timelogs()->get();
