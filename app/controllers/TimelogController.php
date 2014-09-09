@@ -197,11 +197,17 @@ class TimelogController extends BaseController {
 							$timelog->save();
 						} else {
 							$respone = array(
-								'code'=>'201',
+								'code'=>'200',
 								'status'=>'success',
-								'message'=>'Record saved but not replicated on cloud!',
+								'message'=>'Record saved on local but not replicated on cloud!',
 							);
 						}
+					} else {
+						$respone = array(
+							'code'=>'200',
+							'status'=>'success',
+							'message'=>'Record saved on cloud but not replicated!',
+						);
 					}
 				
 					$datetime = explode(' ',$timelog->datetime);
