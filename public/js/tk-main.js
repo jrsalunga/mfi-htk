@@ -1,32 +1,36 @@
 $.ajaxSetup({
 	beforeSend: function(jqXHR, obj) {
     	//xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-    	//console.log('loading..');
+    	console.log('loading..');
     	$('.notify').css('display', 'block');
   	}
 });
 
 var buildEmployeesTimelogs = function(data){
-	
+
 		
-		var tmlgs = getEmployeeTimelogs(data.data.id)
-		var html = htmlEmployeeTimelogs2(tmlgs);
+		//var tmlgs = getEmployeeTimelogs(data.data.id)
+		//var html = htmlEmployeeTimelogs2(tmlgs);
 		//$('#TimelogModal .modal-body').html(html);
+
+		getEmployeeTimelogs(data.data.id).done(function(data){
+			htmlEmployeeTimelogs2(data);
+		});
 
 };
 
 var getEmployeeTimelogs = function(id){
-	var aData;
+	//var aData;
 	
-	$.ajax({
+	return $.ajax({
         type: 'GET',
         contentType: 'application/json',
 		url: '/api/timelog/employee/'+ id,
         dataType: "json",
-        async: false,
+        //async: false,
        // data: formData,
         success: function(data, textStatus, jqXHR){
-            aData = data;
+            //aData = data;
 			//updateTKmodal(data);
 			$('.notify').css('display', 'none');
         },
@@ -36,7 +40,7 @@ var getEmployeeTimelogs = function(id){
         }
     });	
 	
-	return aData;
+	//return aData;
 }
 
 var htmlEmployeeTimelogs2 = function(data){
@@ -232,20 +236,20 @@ var postTimelog = function(empno, tc){
 	
 	console.log(formData);
 	
-	$.ajax({
+	return $.ajax({
         type: 'POST',
         contentType: 'application/x-www-form-urlencoded',
 		url: '/api/timelog',
         dataType: "json",
-        async: false,
+        //async: false,
         data: formData,
         beforeSend: function(jqXHR, obj) {
        		$('.notify .inner').html('Saving...');
 	    	$('.notify').css('display', 'block');
   		},
         success: function(data, textStatus, jqXHR){
-            aData = data;
-			updateTK(data);
+            //aData = data;
+			//updateTK(data);
 			$('.notify').css('display', 'none');
 			$('.notify .inner').html('Loading...');
         },
@@ -258,13 +262,14 @@ var postTimelog = function(empno, tc){
 
 
 var getEmployee = function(empno){
-	var aData;
+	//var aData;
 	
-	$.ajax({
+	return $.ajax({
         type: 'GET',
         contentType: 'application/json',
 		url: '/api/employee/rfid/'+ empno,
         dataType: "json",
+        /*
         async: false,
        // data: formData,
         success: function(data, textStatus, jqXHR){
@@ -276,9 +281,19 @@ var getEmployee = function(empno){
 			$('.message-group').html('<div class="alert alert-danger">Could not connect to server!</div>');
             //alert(textStatus + ' Failed on posting data');
         }
-    });	
+        */
+    }).done(function(data, textStatus, jqXHR) {
+    	//console.log(data);
+    	//aData = data;
+		//updateTKmodal(data);
+		$('.notify').css('display', 'none');
+	})
+	.fail(function(data, textStatus, jqXHR) {
+	    $('.message-group').html('<div class="alert alert-danger">Could not connect to server!</div>');
+        //alert(textStatus + ' Failed on posting data');
+	});
 	
-	return aData;
+	//return aData;
 }
 
 var keypressInit = function(){
@@ -304,8 +319,8 @@ var keypressInit = function(){
 	$(this).bind('keypress', function(e){
 		var code = e.which || e.keyCode;
 		$('.empno').text('');
-		console.log('keypress');
-		console.log(code);		
+		//console.log('keypress');
+		//console.log(code);		
 		
 		if(code == 13) { //Enter keycode
 
@@ -316,8 +331,11 @@ var keypressInit = function(){
 			if(validateEmpno(empno) && last_empno != empno){
 				console.log('Fetching employee: '+ empno);
 				
-				empData = getEmployee(empno);
-				updateTKmodal(empData);
+				getEmployee(empno).done(function(data){
+					updateTKmodal(data);
+					empData = data;
+				});
+				
 				last_empno = empno;
 			} else {
 				console.log('Same Empno')	
@@ -330,7 +348,9 @@ var keypressInit = function(){
 				
 			if(validateEmpno(empno)){
 				console.log('Time In: '+ empno);
-				postTimelog(empno,'ti');
+				postTimelog(empno,'ti').done(function(data){
+					updateTK(data);
+				});
 			}		
 			$('#TKModal').modal('hide');
 			/* on modal hide do this
@@ -342,12 +362,16 @@ var keypressInit = function(){
 			
 			if(validateEmpno(empno)){
 				console.log('Time Out: '+ empno);
-				postTimelog(empno,'to');
+				postTimelog(empno,'to').done(function(data){
+					updateTK(data);
+				});
 			}
 			$('#TKModal').modal('hide');
+			/*
 			endCapture = false;
 			arr = [];
 			last_empno = '';
+			*/
 			
 		} else if((code == 116 || code == 64 || code == 114 || code == 84) && endCapture){ // press view timelogs
 			$('#TKModal').modal('hide');
