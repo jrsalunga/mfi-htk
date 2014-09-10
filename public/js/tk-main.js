@@ -199,11 +199,7 @@ var updateTKmodal = function(data){
 	}
 }
 
-
-
-
-var isInt = function(n) {
-	
+var isInt = function(n) {	
    return n % 1 === 0;
 }
 
@@ -225,13 +221,13 @@ var validateEmpno = function(empno){
 }
 
 var postTimelog = function(empno, tc){
-	var aData;
+	//var aData;
 	var formData = {
 		rfid : empno,
 		datetime: moment().tz("Asia/Manila").format('YYYY-MM-DD HH:mm:ss'),
 		txncode: tc,
 		entrytype: '1',
-		terminalid: 'plant' 
+		//terminalid: 'plant' gethostname
 	}
 	
 	console.log(formData);

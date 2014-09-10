@@ -149,7 +149,7 @@ class TimelogController extends BaseController {
 			'datetime'      => 'required',
 			'txncode'      	=> 'required',
 			'entrytype'     => 'required',
-			'terminalid'    => 'required',
+			//'terminalid'    => 'required',
 		);
 		
 		$validator = Validator::make(Input::all(), $rules);
@@ -159,9 +159,8 @@ class TimelogController extends BaseController {
 					'code'=>'400',
 					'status'=>'error',
 					'message'=>'Error on validation',
-					'data'=> $validator
+					//'data'=> $validator
 			);
-			return json_encode('failed');
 		} else {
 			$employee = Employee::where('rfid', '=', Input::get('rfid'))->get();
 			
@@ -179,7 +178,8 @@ class TimelogController extends BaseController {
 				$timelog->datetime 		= Input::get('datetime');
 				$timelog->txncode 	 	= Input::get('txncode');
 				$timelog->entrytype  	= Input::get('entrytype');
-				$timelog->terminalid 	= Input::get('terminalid');
+				//$timelog->terminalid 	= Input::get('terminalid');
+				$timelog->terminalid 	= gethostname();
 				$timelog->id 	 	 	= Timelog::get_uid();
 				
 				if($timelog->save()){
@@ -244,8 +244,6 @@ class TimelogController extends BaseController {
 				}				
 			}	
 		}
-
-
 		return json_encode($respone);
 	}
 	
