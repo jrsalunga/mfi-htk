@@ -67,6 +67,15 @@ class AdminController extends BaseController {
 		$user->save();	
 	
 	}
+
+
+
+	public function restricted() {
+		
+		
+		return View::make('admin.restricted');
+				
+	}
 	
 	
 

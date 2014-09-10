@@ -123,6 +123,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
+		'Thujohn\Pdf\PdfServiceProvider',
 		'anlutro\cURL\Laravel\cURLServiceProvider',
 
 	),
@@ -191,6 +193,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+		'Excel'			  => 'Maatwebsite\Excel\Facades\Excel',
+		'PDF' 			  => 'Thujohn\Pdf\PdfFacade',
 		'cURL' => 'anlutro\cURL\Laravel\cURL',
 
 	),
