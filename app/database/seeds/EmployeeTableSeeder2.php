@@ -1,6 +1,6 @@
 <?php
 
-class EmployeeTableSeeder extends Seeder {
+class EmployeeTableSeeder2 extends Seeder {
 
 	public function run()
 	{
