@@ -16,12 +16,14 @@ class EmployeeTableSeeder2 extends Seeder {
 			//array('code'=>'0016', 'lastname'=>'Galasao', 'firstname'=>'Ryan', 'middlename'=>'O', 'position'=>'Homag Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002357039', 'id'=>'8C774A47A5C111E385D3C0188508F93C'),
 			//array('code'=>'0099', 'lastname'=>'Garcia', 'firstname'=>'Armando', 'middlename'=>'-', 'position'=>'Production Manager', 'paytype'=>1, 'processing'=>1, 'rfid'=>'1234567890', 'id'=>'67A30428FE6911E3BA4174D02BCA8A4B'),
 			//array('code'=>'0034', 'lastname'=>'Lino', 'firstname'=>'Edward', 'middlename'=>'D', 'position'=>'Installer', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002003777', 'id'=>'0E7A6066B0D711E3A0ECC0188508F93C'),
+			/*
 			array('code'=>'0029', 'lastname'=>'Lopez', 'firstname'=>'Roger', 'middlename'=>'T', 'position'=>'Plant Manager', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002356896', 'id'=>'99265B80A5C211E385D3C0188508F93C'),
 			array('code'=>'0025', 'lastname'=>'Lumiguid', 'firstname'=>'Sonny', 'middlename'=>'L', 'position'=>'Postforming Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002357245', 'id'=>'513FE18CA5C211E385D3C0188508F93C'),
 			array('code'=>'0018', 'lastname'=>'Malicdem', 'firstname'=>'Edian', 'middlename'=>'O', 'position'=>'Multiple Boring Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002351242', 'id'=>'27C819F9A5C211E385D3C0188508F93C'),
 			array('code'=>'0019', 'lastname'=>'Mercado', 'firstname'=>'Dennis', 'middlename'=>'A', 'position'=>'Driver', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002329961', 'id'=>'6A1EC3BBA5C211E385D3C0188508F93C'),
 			array('code'=>'0037', 'lastname'=>'Pat-Angay', 'firstname'=>'Jojie', 'middlename'=>'B', 'position'=>'Installer', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002009260', 'id'=>'BD589EF4B0D411E3A0ECC0188508F93C'),
 			array('code'=>'0038', 'lastname'=>'Pepe', 'firstname'=>'Raymund Bruce', 'middlename'=>'P', 'position'=>'Installer', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002015228', 'id'=>'F8B3A82CB0D611E3A0ECC0188508F93C'),
+			*/
 			array('code'=>'0036', 'lastname'=>'Sembrano', 'firstname'=>'Randy', 'middlename'=>'C', 'position'=>'Panel Saw Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002339376', 'id'=>'CBBE8D92A5C211E385D3C0188508F93C'),
 			array('code'=>'0004', 'lastname'=>'Tan', 'firstname'=>'Steve', 'middlename'=>'C', 'position'=>'Maintainance Supervisor', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002009581', 'id'=>'34E91606A5C311E385D3C0188508F93C'),
 			array('code'=>'0081', 'lastname'=>'Antonio', 'firstname'=>'Alvin', 'middlename'=>'X', 'position'=>'Helper', 'paytype'=>2, 'processing'=>1, 'rfid'=>'0004124355', 'id'=>'894FA470CA8911E385D7C0188508F93C'),
