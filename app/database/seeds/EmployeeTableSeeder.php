@@ -36,6 +36,6 @@ class EmployeeTableSeeder extends Seeder {
 			array('code'=>'0046', 'lastname'=>'Tanio', 'firstname'=>'Melchor', 'middlename'=>'A', 'position'=>'Installer', 'paytype'=>1, 'processing'=>0, 'rfid'=>'0004290680', 'id'=>'77D95D63EB9011E3894560A44CA73CF5'),
 			array('code'=>'0011', 'lastname'=>'Velez', 'firstname'=>'Monica', 'middlename'=>'P', 'position'=>'Design Consultant', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002338605', 'id'=>'0713F534B0D611E3A0ECC0188508F93C'),
 			array('code'=>'0059', 'lastname'=>'Ynion', 'firstname'=>'Garry', 'middlename'=>'.', 'position'=>'Project coordinator', 'paytype'=>1, 'processing'=>0, 'rfid'=>'0004273936', 'id'=>'B4AFD7E8EB9011E3894560A44CA73CF5')
-		));
+			));
 	}
 }

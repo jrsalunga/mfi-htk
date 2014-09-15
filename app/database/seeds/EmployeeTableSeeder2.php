@@ -5,7 +5,6 @@ class EmployeeTableSeeder2 extends Seeder {
 	public function run()
 	{
 		DB::table('employee')->insert(array(
-			//array('code'=>'08-0476', 'lastname'=>'Salunga', 'firstname'=>'Jefferson', 'middlename'=>'Raga',	'position'=>'IT Staff', 'paytype'=>1, 'processing'=>0, 'rfid'=>'0008271985', 'id'=>'10A782CFECEA11E28649235D6C08DF49'),
 			array('code'=>'0012', 'lastname'=>'Apoloy', 'firstname'=>'Edwin', 'middlename'=>'C', 'position'=>'Leadman', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002353874', 'id'=>'FA4EA23DA5C211E385D3C0188508F93C'),
 			array('code'=>'0008', 'lastname'=>'Belando Jr', 'firstname'=>'Jose', 'middlename'=>'B', 'position'=>'Quantity Surveyor', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002016203', 'id'=>'33E9884FB0D811E3A0ECC0188508F93C'),
 			array('code'=>'0020', 'lastname'=>'Cabada', 'firstname'=>'May Anne', 'middlename'=>'R', 'position'=>'Production Staff', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002012861', 'id'=>'1807056DB0D811E3A0ECC0188508F93C'),
@@ -16,7 +15,7 @@ class EmployeeTableSeeder2 extends Seeder {
 			array('code'=>'0050', 'lastname'=>'Flores', 'firstname'=>'Ailyn', 'middlename'=>'P', 'position'=>'Inventory Controller', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002009221', 'id'=>'2F83C260A5BF11E385D3C0188508F93C'),
 			array('code'=>'0016', 'lastname'=>'Galasao', 'firstname'=>'Ryan', 'middlename'=>'O', 'position'=>'Homag Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002357039', 'id'=>'8C774A47A5C111E385D3C0188508F93C'),
 			array('code'=>'0099', 'lastname'=>'Garcia', 'firstname'=>'Armando', 'middlename'=>'-', 'position'=>'Production Manager', 'paytype'=>1, 'processing'=>1, 'rfid'=>'1234567890', 'id'=>'67A30428FE6911E3BA4174D02BCA8A4B'),
-			array('code'=>'0034', 'lastname'=>'Lino', 'firstname'=>'Edward', 'middlename'=>'D', 'position'=>'Installer', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002003777', 'id'=>'0E7A6066B0D711E3A0ECC0188508F93C'),
+			//array('code'=>'0034', 'lastname'=>'Lino', 'firstname'=>'Edward', 'middlename'=>'D', 'position'=>'Installer', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002003777', 'id'=>'0E7A6066B0D711E3A0ECC0188508F93C'),
 			array('code'=>'0029', 'lastname'=>'Lopez', 'firstname'=>'Roger', 'middlename'=>'T', 'position'=>'Plant Manager', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002356896', 'id'=>'99265B80A5C211E385D3C0188508F93C'),
 			array('code'=>'0025', 'lastname'=>'Lumiguid', 'firstname'=>'Sonny', 'middlename'=>'L', 'position'=>'Postforming Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002357245', 'id'=>'513FE18CA5C211E385D3C0188508F93C'),
 			array('code'=>'0018', 'lastname'=>'Malicdem', 'firstname'=>'Edian', 'middlename'=>'O', 'position'=>'Multiple Boring Operator', 'paytype'=>1, 'processing'=>1, 'rfid'=>'0002351242', 'id'=>'27C819F9A5C211E385D3C0188508F93C'),
