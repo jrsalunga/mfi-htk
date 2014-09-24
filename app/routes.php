@@ -98,7 +98,6 @@ Route::get('api/search/{field?}', array('as'=>'search.field', 'uses'=>'SearchCon
 
 
 
-
 Route::get('api/timelog/employee/{id?}', function($id = null) {
 	
 	if(!$id){
