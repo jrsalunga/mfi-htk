@@ -78,7 +78,7 @@
 			<div class="date-group">
 				<div id="date">
 					<span class="glyphicon glyphicon-calendar"> </span>				
-					<time>{{  	 }}</time>
+					<time>{{  date('F j, Y', strtotime('now')) }}</time>
 					<!--<span class="day">{{  date('D', strtotime('now')) }}</span> -->
 				</div>
 				<div>
