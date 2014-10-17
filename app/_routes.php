@@ -195,19 +195,13 @@ Route::post('/api/test', function(){
 });
 
 
-Route::get('/env', function(){
-	$environment = App::environment();
-	echo $environment;
-});
+
 
 Route::get('/api/employee/{id}', function($id){
 	$employee = Employee::find($id);
 	return $employee->toJson();
 });
 
-Route::get('/env/hostname', function(){
-	return gethostname();
-});
 
 
 
@@ -217,11 +211,17 @@ Route::get('/phpinfoko', function(){
 	echo phpinfo();
 });
 
-
-
-
 Route::get('/checkdbconn', function(){
 	if(DB::connection()->getDatabaseName()){
 	   echo "connected sucessfully to database ".DB::connection()->getDatabaseName();
 	}
+});
+
+Route::get('/env/hostname', function(){
+    return gethostname();
+});
+
+Route::get('/env', function(){
+    $environment = App::environment();
+    echo $environment;
 });

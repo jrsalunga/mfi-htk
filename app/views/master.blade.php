@@ -78,7 +78,7 @@
 			<div class="date-group">
 				<div id="date">
 					<span class="glyphicon glyphicon-calendar"> </span>				
-					<time>{{  date('F j, Y', strtotime('now')) }}</time>
+					<time>{{  	 }}</time>
 					<!--<span class="day">{{  date('D', strtotime('now')) }}</span> -->
 				</div>
 				<div>
@@ -227,7 +227,41 @@
 	
 	{{ HTML::script('js/vendors/jquery.typeflow.js') }}
 	{{ HTML::script('js/vendors/bootstrap.min.js') }}
+	{{ HTML::script('js/vendors/brain-socket.min.js') }}
 	{{ HTML::script('js/tk-main.js') }}
+
+	<script type="text/javascript" charset="utf-8">
+	
+	$(document).ready(function(){
+		window.app = {};
+		app.BrainSocket = new BrainSocket(
+        	new WebSocket('ws://mfi-htk.herokuapp.com:8080'),
+        	new BrainSocketPubSub()
+		);
+
+	
+
+		app.BrainSocket.Event.listen('generic.event',function(msg)
+		{
+		    console.log(msg);
+		});
+
+		app.BrainSocket.Event.listen('app.success',function(msg)
+		{
+		    console.log(msg);
+		});
+
+		app.BrainSocket.Event.listen('app.error',function(msg)
+		{
+		    console.log(msg);
+		});
+
+	
+
+		
+	});
+
+	</script>
 
 </body>
 </html>

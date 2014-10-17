@@ -126,6 +126,7 @@ return array(
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Thujohn\Pdf\PdfServiceProvider',
 		'anlutro\cURL\Laravel\cURLServiceProvider',
+		'BrainSocket\BrainSocketServiceProvider',
 
 	),
 
@@ -196,6 +197,7 @@ return array(
 		'Excel'			  => 'Maatwebsite\Excel\Facades\Excel',
 		'PDF' 			  => 'Thujohn\Pdf\PdfFacade',
 		'cURL' => 'anlutro\cURL\Laravel\cURL',
+		'BrainSocket'     => 'BrainSocket\BrainSocketFacade',
 
 	),
 
