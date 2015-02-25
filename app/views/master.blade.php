@@ -235,7 +235,7 @@
 	$(document).ready(function(){
 		window.app = {};
 		app.BrainSocket = new BrainSocket(
-        	new WebSocket('ws://mfi-htk.herokuapp.com:8080'),
+        	new WebSocket('ws://localhost:8080'),
         	new BrainSocketPubSub()
 		);
 

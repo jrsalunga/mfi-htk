@@ -35,7 +35,7 @@ Route::get('/', function() {
 	
 });
 
-
+Route::get('/v2', array('as'=>'v2.index', 'uses'=>'PolymerController@index'));
 
 //Route::get('admin/masterfiles', 'MasterfilesController@index');
 //Route::resource('admin', 'AdminController');
@@ -96,7 +96,7 @@ Route::get('api/employee/{field?}/{value?}', array('as'=>'field.get', 'uses'=>'E
 Route::get('api/search/{field?}', array('as'=>'search.field', 'uses'=>'SearchController@searchTable'));
 
 
-
+	
 
 Route::get('api/timelog/employee/{id?}', function($id = null) {
 	

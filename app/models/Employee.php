@@ -13,6 +13,9 @@ class Employee extends ObjectModel {
 	public function timelogs() {
         return $this->hasMany('Timelog', 'employeeid');
     }
+
+
+    
 	
 	
 	public static function searchField($q) {

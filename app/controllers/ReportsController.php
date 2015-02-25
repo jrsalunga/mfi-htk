@@ -143,10 +143,6 @@ class ReportsController extends BaseController {
 					  ->export('csv');
 	}
 	
-	
-	
-	
-	
 	private function exportCSV($employee, $timelogs){
 		
 		$output = array();
@@ -165,7 +161,7 @@ class ReportsController extends BaseController {
 	}
 	
 	
-	private function exportPDF($employee, $timelogs, $paper = 'A4', $orientation = 'portrait', $action = 'show'){
+	private function exportPDF($employee, $timelogs, $paper='A4', $orientation='portrait', $action = 'show'){
 		if($action == 'download'){
 			return PDF::load(
 					View::make('pdf.emp-timelogs')
